@@ -504,21 +504,21 @@ if cisd_bullishPullbackDetected and not cisd_isBullishPullback
 // Update Potential Levels During Pullbacks (body only)
 if cisd_isBullishPullback
     // New lower body → update bottom anchor
-    if open < potentialBottomPrice
+    if open < cisd_potentialBottomPrice
         cisd_potentialBottomPrice := open
         cisd_bearishBreakIndex    := bar_index
     // Red candle with higher open than current bottom → shift anchor to that open
-    if (close < open) and (open > potentialBottomPrice)
+    if (close < open) and (open > cisd_potentialBottomPrice)
         cisd_potentialBottomPrice := open
         cisd_bearishBreakIndex    := bar_index     
 
 if cisd_isBearishPullback
     // New higher open → update top anchor
-    if open > potentialTopPrice
+    if open > cisd_potentialTopPrice
         cisd_potentialTopPrice := open
         cisd_bullishBreakIndex := bar_index
     // Green candle with lower open than current top → shift anchor to that open
-    if (close > open) and open < potentialTopPrice
+    if (close > open) and open < cisd_potentialTopPrice
         cisd_potentialTopPrice := open
         cisd_bullishBreakIndex := bar_index      
 
@@ -539,7 +539,7 @@ if bodyLow(0) < cisd_currentStructure.bottomPrice
         cisd_isBearishPullback := false
 
         cisd_bearishLine  = line.new(cisd_bullishBreakIndex, cisd_potentialTopPrice, bar_index + cisd_lookAheadBars, cisd_potentialTopPrice, color = bullishBreakColor, width = cisd_lineWidth, style = cisd_lineStyle)
-        cisd_bearishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialTopPrice, bullStr, color = color.new(color.white, 100), textcolor = bullishBreakColor, style = label.style_label_left, text_font_family = font.family_default, size = size.small, text_formatting = text.format_italic)
+        cisd_bearishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialTopPrice, bullStr, color = color.new(color.white, 100), textcolor = bullishBreakColor, style = label.style_label_left, size = size.small)
         cisd_bstruct = cisd.new(cisd_bearishLine, cisd_bearishLabel, false)
         array.push(cisdLevelsBe, cisd_bstruct)
     else if close[1] > open[1] and close < open
@@ -547,7 +547,7 @@ if bodyLow(0) < cisd_currentStructure.bottomPrice
         cisd_isBearishPullback := false
 
         cisd_bearishLine  = line.new(cisd_bullishBreakIndex, cisd_potentialTopPrice, bar_index + cisd_lookAheadBars, cisd_potentialTopPrice, color = bullishBreakColor, width = cisd_lineWidth, style = cisd_lineStyle)
-        cisd_bearishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialTopPrice, bullStr, color = color.new(color.white, 100), textcolor = bullishBreakColor, style = label.style_label_left, text_font_family = font.family_default, size = size.small, text_formatting = text.format_italic)
+        cisd_bearishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialTopPrice, bullStr, color = color.new(color.white, 100), textcolor = bullishBreakColor, style = label.style_label_left, size = size.small)
         cisd_bstruct = cisd.new(cisd_bearishLine, cisd_bearishLabel, false)
         array.push(cisdLevelsBe, cisd_bstruct)
 
@@ -568,7 +568,7 @@ if bodyHigh(0) > cisd_currentStructure.topPrice
         cisd_isBullishPullback := false
 
         cisd_bullishLine  = line.new(cisd_bearishBreakIndex, cisd_potentialBottomPrice, bar_index + cisd_lookAheadBars, cisd_potentialBottomPrice, color = bearishBreakColor, width = cisd_lineWidth, style = cisd_lineStyle)
-        cisd_bullishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialBottomPrice, bearStr, color = color.new(color.white, 100), textcolor = bearishBreakColor, style = label.style_label_left, text_font_family = font.family_default, size = size.small, text_formatting = text.format_italic)
+        cisd_bullishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialBottomPrice, bearStr, color = color.new(color.white, 100), textcolor = bearishBreakColor, style = label.style_label_left, size = size.small)
         cisd_bu_struct = cisd.new(cisd_bullishLine, cisd_bullishLabel, false)
         array.push(cisdLevelsBu, cisd_bu_struct)
     else if close[1] < open[1] and close > open
@@ -576,7 +576,7 @@ if bodyHigh(0) > cisd_currentStructure.topPrice
         cisd_isBullishPullback := false
 
         cisd_bullishLine  = line.new(cisd_bearishBreakIndex, cisd_potentialBottomPrice, bar_index + cisd_lookAheadBars, cisd_potentialBottomPrice, color = bearishBreakColor, width = cisd_lineWidth, style = cisd_lineStyle)
-        cisd_bullishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialBottomPrice, bearStr, color = color.new(color.white, 100), textcolor = bearishBreakColor, style = label.style_label_left, text_font_family = font.family_default, size = size.small, text_formatting = text.format_italic)
+        cisd_bullishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialBottomPrice, bearStr, color = color.new(color.white, 100), textcolor = bearishBreakColor, style = label.style_label_left, size = size.small)
         cisd_bu_struct = cisd.new(cisd_bullishLine, cisd_bullishLabel, false)
         array.push(cisdLevelsBu, cisd_bu_struct)
 
@@ -612,7 +612,7 @@ if array.size(cisdLevelsBu) >= 1
 
         // Spawn new bearish CISD from current top anchor
         cisd_bearishLine  = line.new(cisd_bullishBreakIndex, cisd_potentialTopPrice, bar_index + cisd_lookAheadBars, cisd_potentialTopPrice, color = bullishBreakColor, width = cisd_lineWidth, style = cisd_lineStyle)
-        cisd_bearishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialTopPrice, bullStr, color = color.new(color.white, 100), textcolor = bullishBreakColor, style = label.style_label_left, text_font_family = font.family_monospace, size = size.small, text_formatting = text.format_italic)
+        cisd_bearishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialTopPrice, bullStr, color = color.new(color.white, 100), textcolor = bullishBreakColor, style = label.style_label_left, size = size.small)
         cisd_bstruct2 = cisd.new(cisd_bearishLine, cisd_bearishLabel, false)
         array.push(cisdLevelsBe, cisd_bstruct2)
 
@@ -637,7 +637,7 @@ if array.size(cisdLevelsBe) >= 1
 
         // Spawn new bullish CISD from current bottom anchor
         cisd_bullishLine  = line.new(cisd_bearishBreakIndex, cisd_potentialBottomPrice, bar_index + cisd_lookAheadBars, cisd_potentialBottomPrice, color = bearishBreakColor, width = cisd_lineWidth, style = cisd_lineStyle)
-        cisd_bullishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialBottomPrice, bearStr, color = color.new(color.white, 100), textcolor = bearishBreakColor, style = label.style_label_left, text_font_family = font.family_monospace, size = size.small, text_formatting = text.format_italic)
+        cisd_bullishLabel = label.new(bar_index + cisd_lookAheadBars, cisd_potentialBottomPrice, bearStr, color = color.new(color.white, 100), textcolor = bearishBreakColor, style = label.style_label_left, size = size.small)
         cisd_bu_struct2 = cisd.new(cisd_bullishLine, cisd_bullishLabel, false)
         array.push(cisdLevelsBu, cisd_bu_struct2)
 
