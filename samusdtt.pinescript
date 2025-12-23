@@ -8,7 +8,7 @@
 // © Zeiierman
 
 //@version=5
-indicator("HTF Candle and Seperetor",overlay = true,max_bars_back = 500, max_boxes_count = 500)
+indicator("Samusdtt",overlay = true,max_bars_back = 500, max_boxes_count = 500)
 
 // ~~ Inputs {
 tf       = input.timeframe("60","Timeframe", group="Higher Timeframe Candles")
